@@ -124,8 +124,7 @@ INT *pf1, *pf2;
 						INT i;
 
 						for (i = 0; i < MAXTRAP; i++)
-							if (trapcom[i]
-							) {
+							if (trapcom[i]) {
 								prn(i);
 								prs(colon);
 								prs(trapcom[i]);
@@ -173,11 +172,11 @@ INT *pf1, *pf2;
 					exitval = readvar(&com[1]);
 					break;
 
-/*
- * case SYSTST:
- * exitval=testcmd(com);
- * break;
- */
+				/*
+				* case SYSTST:
+				* 	exitval=testcmd(com);
+				* 	break;
+				*/
 
 				case SYSSET:
 					if (a1) {
@@ -373,8 +372,7 @@ INT *pf1, *pf2;
 			INT i = 0;
 
 			loopcnt++;
-			while (execbrk == 0 && (execute(t->whtre, 0) == 0) == (type == TWH)
-			) {
+			while (execbrk == 0 && (execute(t->whtre, 0) == 0) == (type == TWH)) {
 				i = execute(t->dotre, 0);
 				if (execbrk < 0)
 					execbrk = 0;
@@ -402,8 +400,7 @@ INT *pf1, *pf2;
 				ARGPTR rex = t->regptr;
 				while (rex) {
 					register STRING s;
-					if (gmatch(r, s = macro(rex->argval)) || (trim(s), eq(r, s))
-					) {
+					if (gmatch(r, s = macro(rex->argval)) || (trim(s), eq(r, s))) {
 						execute(t->regcom, 0);
 						t = 0;
 						break;

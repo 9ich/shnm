@@ -12,22 +12,26 @@ CHAR numbuf[6];
 
 /* printing and io conversion */
 
-newline(){
+newline()
+{
 	prc(NL);
 }
 
-blank(){
+blank()
+{
 	prc(SP);
 }
 
-prp(){
+prp()
+{
 	if ((flags & prompt) == 0 && cmdadr) {
 		prs(cmdadr);
 		prs(colon);
 	}
 }
 
-VOID prs(as)
+VOID
+prs(as)
 STRING as;
 {
 	register STRING s;
@@ -36,7 +40,8 @@ STRING as;
 		write(output, s, length(s) - 1);
 }
 
-VOID prc(c)
+VOID
+prc(c)
 CHAR c;
 {
 	if (c)

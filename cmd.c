@@ -23,7 +23,8 @@ extern VOID synbad();
 
 /* ========	command line decoding	========*/
 
-TREPTR makefork(flgs, i)
+TREPTR
+makefork(flgs, i)
 INT flgs;
 TREPTR i;
 {
@@ -36,7 +37,8 @@ TREPTR i;
 	return t;
 }
 
-static TREPTR makelist(type, i, r)
+static TREPTR
+makelist(type, i, r)
 INT type;
 TREPTR i, r;
 {
@@ -60,7 +62,8 @@ TREPTR i, r;
  *	list & [ cmd ]
  *	list [ ; cmd ]
  */
-TREPTR cmd(sym, flg)
+TREPTR
+cmd(sym, flg)
 register INT sym;
 INT flg;
 {
@@ -139,7 +142,8 @@ term(flg)
 		return t;
 }
 
-static REGPTR syncase(esym)
+static REGPTR
+syncase(esym)
 register INT esym;
 {
 	skipnl();
@@ -179,7 +183,8 @@ register INT esym;
  *	case ... in ... esac
  *	begin ... end
  */
-static TREPTR item(flag)
+static TREPTR
+item(flag)
 BOOL flag;
 {
 	register TREPTR t;
@@ -311,7 +316,8 @@ skipnl()
 	return wdval;
 }
 
-static IOPTR inout(lastio)
+static IOPTR
+inout(lastio)
 IOPTR lastio;
 {
 	register INT iof;

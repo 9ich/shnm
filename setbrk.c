@@ -8,7 +8,8 @@
 
 #include "defs.h"
 
-setbrk(incr){
+setbrk(incr)
+{
 	register BYTPTR a = sbrk(incr);
 
 	brkend = a + incr;

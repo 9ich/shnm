@@ -46,7 +46,8 @@ FILE af;
 	standin = f;
 }
 
-pop(){
+pop()
+{
 	register FILE f;
 
 	if ((f = standin)->fstak) {
@@ -98,7 +99,8 @@ STRING s;
 		return rc;
 }
 
-tmpfil(){
+tmpfil()
+{
 	itos(serial++);
 	movstr(numbuf, tmpnam);
 	return create(tmpout);

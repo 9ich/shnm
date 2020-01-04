@@ -11,7 +11,8 @@
 
 /* ========	character handling for command lines	========*/
 
-word(){
+word()
+{
 	register CHAR c, d;
 	register CHAR *argp = locstak() + BYTESPERWORD;
 	INT alpha = 1;
@@ -20,8 +21,7 @@ word(){
 	wdset = 0;
 
 	while ((c = nextc(0), space(c)));
-	if (!eofmeta(c)
-	) {
+	if (!eofmeta(c)) {
 		do {
 			if (c == LITERAL) {
 				*argp++ = (DQUOTE);
@@ -36,8 +36,7 @@ word(){
 					wdset |= alpha;
 				if (!alphanum(c))
 					alpha = 0;
-				if (qotchar(c)
-				) {
+				if (qotchar(c)) {
 					d = c;
 					while ((*argp++ = (c = nextc(d))) && c != d)
 						chkpr(c);
@@ -49,8 +48,7 @@ word(){
 			wdset = 0;
 
 		peekc = c | MARK;
-		if (argp->argval[1] == 0 && (d = argp->argval[0], digit(d)) && (c == '>' || c == '<')
-		) {
+		if (argp->argval[1] == 0 && (d = argp->argval[0], digit(d)) && (c == '>' || c == '<')) {
 			word();
 			wdnum = d - '0';
 		} else /*check for reserved words */
@@ -58,8 +56,7 @@ word(){
 			wdarg = argp;
 			wdval = 0;
 		}
-	} else if (dipchar(c)
-	) {
+	} else if (dipchar(c)) {
 		if ((d = nextc(0)) == c)
 			wdval = c | SYMREP;
 		else {
@@ -69,8 +66,7 @@ word(){
 	} else {
 		if ((wdval = c) == EOF)
 			wdval = EOFSYM;
-		if (iopend && eolchar(c)
-		) {
+		if (iopend && eolchar(c)) {
 			copy(iopend);
 			iopend = 0;
 		}
@@ -87,8 +83,7 @@ CHAR quote;
 		if ((c = readc()) == NL) {
 			chkpr(NL);
 			d = nextc(quote);
-		} else if (quote && c != quote && !escchar(c)
-		)
+		} else if (quote && c != quote && !escchar(c))
 			peekc = c | MARK;
 		else
 			d = c | QUOTE;
@@ -96,7 +91,8 @@ CHAR quote;
 	return d;
 }
 
-readc(){
+readc()
+{
 	register CHAR c;
 	register INT len;
 	register FILE f;
@@ -105,12 +101,10 @@ retry:
 	if (peekc) {
 		c = peekc;
 		peekc = 0;
-	} else if ((f = standin, f->fnxt != f->fend)
-	) {
+	} else if ((f = standin, f->fnxt != f->fend)) {
 		if ((c = *f->fnxt++) == 0) {
 			if (f->feval) {
-				if (estabf(*f->feval++)
-				)
+				if (estabf(*f->feval++))
 					c = EOF;
 				else
 					c = SP;
@@ -137,7 +131,9 @@ retry:
 	return c;
 }
 
-static readb(){
+static
+readb()
+{
 	register FILE f = standin;
 	register INT len;
 

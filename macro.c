@@ -12,7 +12,8 @@
 static CHAR quote;/* used locally */
 static CHAR quoted; /* used locally */
 
-static STRING copyto(endch)
+static STRING
+copyto(endch)
 register CHAR endch;
 {
 	register CHAR c;
@@ -24,7 +25,8 @@ register CHAR endch;
 		error(badsub);
 }
 
-static skipto(endch)
+static
+skipto(endch)
 register CHAR endch;
 {
 	/* skip chars up to } */
@@ -47,20 +49,19 @@ register CHAR endch;
 		error(badsub);
 }
 
-static getch(endch)
+static
+getch(endch)
 CHAR endch;
 {
 	register CHAR d;
 
 retry:
 	d = readc();
-	if (!subchar(d)
-	)
+	if (!subchar(d))
 		return d;
 	if (d == DOLLAR) {
 		register INT c;
-		if ((c = readc(), dolchar(c))
-		) {
+		if ((c = readc(), dolchar(c))) {
 			NAMPTR n = NIL;
 			INT dolg = 0;
 			BOOL bra;
@@ -70,8 +71,7 @@ retry:
 
 			if (bra = (c == BRACE))
 				c = readc();
-			if (letter(c)
-			) {
+			if (letter(c)) {
 				argp = relstak();
 				while (alphanum(c)) {
 					pushstak(c);
@@ -83,12 +83,10 @@ retry:
 				v = n->namval;
 				id = n->namid;
 				peekc = c | MARK;;
-			} else if (digchar(c)
-			) {
+			} else if (digchar(c)) {
 				*id = c;
 				idb[1] = 0;
-				if (astchar(c)
-				) {
+				if (astchar(c)) {
 					dolg = 1;
 					c = '1';
 				}
@@ -115,8 +113,7 @@ retry:
 			if (bra) {
 				if (c != '}') {
 					argp = relstak();
-					if ((v == 0) ^ (setchar(c))
-					)
+					if ((v == 0) ^ (setchar(c)))
 						copyto('}');
 					else
 						skipto('}');
@@ -129,11 +126,9 @@ retry:
 			if (v) {
 				if (c != '+')
 					for (;;) {
-						while (c = *v++) {
-							pushstak(c | quote);;
-						}
-						if (dolg == 0 || (++dolg > dolc)
-						)
+						while (c = *v++)
+							pushstak(c | quote);
+						if (dolg == 0 || (++dolg > dolc))
 							break;
 						else {
 							v = dolv[dolg];
@@ -167,7 +162,8 @@ retry:
 	return d;
 }
 
-STRING macro(as)
+STRING
+macro(as)
 STRING as;
 {
 	/* Strip "" and do $ substitution
@@ -191,7 +187,9 @@ STRING as;
 	return fixstak();
 }
 
-static comsubst(){
+static
+comsubst()
+{
 	/* command substn */
 	FILEBLK cb;
 	register CHAR d;
@@ -244,8 +242,7 @@ INT in, ot;
 	push(&fb);
 	initf(in);
 	/* DQUOTE used to stop it from quoting */
-	while (c = (getch(DQUOTE) & STRIP)
-	) {
+	while (c = (getch(DQUOTE) & STRIP)) {
 		pushstak(c);
 		if (--count == 0) {
 			flush(ot);
@@ -256,7 +253,9 @@ INT in, ot;
 	pop();
 }
 
-static flush(ot){
+static
+flush(ot)
+{
 	write(ot, stakbot, staktop - stakbot);
 	if (flags & execpr)
 		write(output, stakbot, staktop - stakbot);

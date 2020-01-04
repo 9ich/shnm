@@ -10,11 +10,13 @@
 
 /* ========	error handling	======== */
 
-exitset(){
+exitset()
+{
 	assnum(&exitadr, exitval);
 }
 
-sigchk(){
+sigchk()
+{
 	/* Find out if it is time to go away.
 	 * `trapnote' is set to SIGSET when fault is seen and
 	 * no trap has been set.
@@ -61,11 +63,11 @@ INT xno;
 	}
 }
 
-done(){
+done()
+{
 	register STRING t;
 
-	if (t = trapcom[0]
-	) {
+	if (t = trapcom[0]) {
 		trapcom[0] = 0; /*should free but not long */
 		execexp(t, 0);
 	}

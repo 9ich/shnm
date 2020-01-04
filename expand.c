@@ -23,7 +23,8 @@
 
 extern VOID addg();
 
-INT expand(as, rflg)
+INT
+expand(as, rflg)
 STRING as;
 {
 	INT count, dirf;
@@ -45,8 +46,7 @@ STRING as;
 	{
 		register BOOL slash;
 		slash = 0;
-		while (!fngchar(*cs)
-		) {
+		while (!fngchar(*cs)) {
 			if (*cs++ == 0) {
 				if (rflg && slash)
 					break;
@@ -86,11 +86,9 @@ STRING as;
 		while (*rs++);
 
 		while (read(dirf, &entry, 16) == 16 && (trapnote & SIGSET) == 0) {
-			if (entry.d_ino == 0 || (*entry.d_name == '.' && *cs != '.')
-			)
+			if (entry.d_ino == 0 || (*entry.d_name == '.' && *cs != '.'))
 				continue;
-			if (gmatch(entry.d_name, cs)
-			) {
+			if (gmatch(entry.d_name, cs)) {
 				addg(s, entry.d_name, rescan);
 				count++;
 			}
@@ -170,7 +168,8 @@ register STRING s, p;
 	}
 }
 
-static VOID addg(as1, as2, as3)
+static VOID
+addg(as1, as2, as3)
 STRING as1, as2, as3;
 {
 	register STRING s1, s2;

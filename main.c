@@ -111,8 +111,7 @@ BOOL prof;
 	userid = getuid();
 
 	/* decide whether interactive */
-	if ((flags & intflg) || ((flags & oneflg) == 0 && gtty(output, &statb) == 0 && gtty(input, &statb) == 0)
-	) {
+	if ((flags & intflg) || ((flags & oneflg) == 0 && gtty(output, &statb) == 0 && gtty(input, &statb) == 0)) {
 		dfault(&ps1nod, (userid ? stdprompt : supprompt));
 		dfault(&ps2nod, readmsg);
 		flags |= ttyflg | prompt;

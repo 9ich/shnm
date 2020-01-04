@@ -22,7 +22,8 @@ INT flagval[] = {
 
 /* ========	option handling	======== */
 
-INT options(argc, argv)
+INT
+options(argc, argv)
 STRING *argv;
 INT argc;
 {
@@ -57,8 +58,7 @@ INT argc;
 	flagc = flagchar;
 	flagp = flagadr;
 	while (*flagc) {
-		if (flags & flagval[flagc - flagchar]
-		)
+		if (flags & flagval[flagc - flagchar])
 			*flagp++ = *flagc;
 		flagc++;
 	}
@@ -67,7 +67,8 @@ INT argc;
 	return argc;
 }
 
-VOID setargs(argi)
+VOID
+setargs(argi)
 STRING argi[];
 {
 	/* count args */
@@ -101,7 +102,8 @@ DOLPTR blk;
 	return argr;
 }
 
-static STRING *copyargs(from, n)
+static STRING*
+copyargs(from, n)
 STRING from[];
 {
 	register STRING *np = alloc(sizeof(STRING *) * n + 3 * BYTESPERWORD);
@@ -118,7 +120,8 @@ STRING from[];
 	return pp;
 }
 
-clearup(){
+clearup()
+{
 	/* force `for' $* lists to go away */
 	while (argfor = freeargs(argfor));
 

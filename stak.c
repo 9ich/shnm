@@ -12,7 +12,8 @@ STKPTR stakbot = nullstr;
 
 /* ========	storage allocation	======== */
 
-STKPTR getstak(asize)
+STKPTR
+getstak(asize)
 INT asize;
 {/* allocate requested stack */
 	register STKPTR oldstak;
@@ -44,7 +45,8 @@ savstak()
 	return stakbot;
 }
 
-STKPTR endstak(argp)
+STKPTR
+endstak(argp)
 register STRING argp;
 {/* tidy up after `locstak' */
 	register STKPTR oldstak;
@@ -54,12 +56,12 @@ register STRING argp;
 	return oldstak;
 }
 
-VOID tdystak(x)
+VOID
+tdystak(x)
 register STKPTR x;
 {
 	/* try to bring stack back to x */
-	while (ADR(stakbsy) > ADR(x)
-	) {
+	while (ADR(stakbsy) > ADR(x)) {
 		free(stakbsy);
 		stakbsy = stakbsy->word;
 	}
@@ -67,12 +69,14 @@ register STKPTR x;
 	rmtemp(x);
 }
 
-stakchk(){
+stakchk()
+{
 	if ((brkend - stakbas) > BRKINCR + BRKINCR)
 		setbrk(-BRKINCR);
 }
 
-STKPTR cpystak(x)
+STKPTR
+cpystak(x)
 STKPTR x;
 {
 	return endstak(movstr(x, locstak()));

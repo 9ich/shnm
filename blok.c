@@ -20,7 +20,8 @@ POS brkincr = BRKINCR;
 BLKPTR blokp;/*current search pointer */
 BLKPTR bloktop = BLK(end);/*top of arena (last blok) */
 
-ADDRESS alloc(nbytes)
+ADDRESS
+alloc(nbytes)
 POS nbytes;
 {
 	register POS rbytes = round(nbytes + BYTESPERWORD, BYTESPERWORD);
@@ -30,8 +31,7 @@ POS nbytes;
 		register BLKPTR p = blokp;
 		register BLKPTR q;
 		do {
-			if (!busy(p)
-			) {
+			if (!busy(p)) {
 				while (!busy(q = p->word))
 					p->word = q->word;
 				if (ADR(q) - ADR(p) >= rbytes) {
@@ -49,7 +49,8 @@ POS nbytes;
 	}
 }
 
-VOID addblok(reqd)
+VOID
+addblok(reqd)
 POS reqd;
 {
 	if (stakbas != staktop) {
@@ -102,8 +103,7 @@ BLKPTR ptr;
 			abort(3);
 		if (p == bloktop)
 			break;
-		if (busy(p)
-		)
+		if (busy(p))
 			us += q - p;
 		else
 			un += q - p;

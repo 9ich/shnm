@@ -40,8 +40,7 @@ SYSTAB syswds;
 	first = *w;
 
 	while (s = syscan->sysnam) {
-		if (first == *s && eq(w, s)
-		)
+		if (first == *s && eq(w, s))
 			return syscan->sysval;
 		syscan++;
 	}
@@ -60,22 +59,21 @@ INT xp;
 			prs(s);
 			if (arg)
 				blank();
-			else {
-				newline();;
-			}
+			else
+				newline();
 		}
 	}
 }
 
-VOID setname(argi, xp)
+VOID
+setname(argi, xp)
 STRING argi;
 INT xp;
 {
 	register STRING argscan = argi;
 	register NAMPTR n;
 
-	if (letter(*argscan)
-	) {
+	if (letter(*argscan)) {
 		while (alphanum(*argscan))
 			argscan++;
 		if (*argscan == '=') {
@@ -119,7 +117,8 @@ STRING v;
 		replace(&n->namval, v);
 }
 
-INT readvar(names)
+INT
+readvar(names)
 STRING *names;
 {
 	FILEBLK fb;
@@ -136,8 +135,7 @@ STRING *names;
 
 	for (;;) {
 		c = nextc(0);
-		if ((*names && any(c, ifsnod.namval)) || eolchar(c)
-		) {
+		if ((*names && any(c, ifsnod.namval)) || eolchar(c)) {
 			zerostak();
 			assign(n, absstak(rel));
 			setstak(rel);
@@ -145,8 +143,7 @@ STRING *names;
 				n = lookup(*names++);
 			else
 				n = 0;
-			if (eolchar(c)
-			)
+			if (eolchar(c))
 				break;
 		} else
 			pushstak(c);
@@ -155,9 +152,8 @@ STRING *names;
 		assign(n, nullstr);
 		if (*names)
 			n = lookup(*names++);
-		else {
-			n = 0;;
-		}
+		else
+			n = 0;
 	}
 
 	if (eof)
@@ -175,7 +171,8 @@ INT i;
 	replace(p, numbuf);
 }
 
-STRING make(v)
+STRING
+make(v)
 STRING v;
 {
 	register STRING p;
@@ -187,15 +184,15 @@ STRING v;
 		return 0;
 }
 
-NAMPTR lookup(nam)
+NAMPTR
+lookup(nam)
 register STRING nam;
 {
 	register NAMPTR nscan = namep;
 	register NAMPTR *prev;
 	INT LR;
 
-	if (!chkid(nam)
-	)
+	if (!chkid(nam))
 		failed(nam, notid);
 	while (nscan) {
 		if ((LR = cf(nam, nscan->namid)) == 0)
@@ -217,18 +214,17 @@ register STRING nam;
 	return *prev = nscan;
 }
 
-static BOOL chkid(nam)
+static BOOL
+chkid(nam)
 STRING nam;
 {
 	register CHAR *cp = nam;
 
-	if (!letter(*cp)
-	)
+	if (!letter(*cp))
 		return FALSE;
 	else
 		while (*++cp)
-			if (!alphanum(*cp)
-			)
+			if (!alphanum(*cp))
 				return FALSE;
 	return TRUE;
 }
@@ -241,7 +237,8 @@ VOID (*fn) ();
 	namwalk(namep);
 }
 
-static VOID namwalk(np)
+static VOID
+namwalk(np)
 register NAMPTR np;
 {
 	if (np) {
@@ -251,7 +248,8 @@ register NAMPTR np;
 	}
 }
 
-VOID printnam(n)
+VOID
+printnam(n)
 NAMPTR n;
 {
 	register STRING s;
@@ -265,7 +263,8 @@ NAMPTR n;
 	}
 }
 
-static STRING staknam(n)
+static STRING
+staknam(n)
 register NAMPTR n;
 {
 	register STRING p;
@@ -276,7 +275,8 @@ register NAMPTR n;
 	return getstak(p + 1 - ADR(stakbot));
 }
 
-VOID exname(n)
+VOID
+exname(n)
 register NAMPTR n;
 {
 	if (n->namflg & N_EXPORT) {
@@ -288,7 +288,8 @@ register NAMPTR n;
 	}
 }
 
-VOID printflg(n)
+VOID
+printflg(n)
 register NAMPTR n;
 {
 	if (n->namflg & N_EXPORT) {
@@ -299,8 +300,7 @@ register NAMPTR n;
 		prs(readonly);
 		blank();
 	}
-	if (n->namflg & (N_EXPORT | N_RDONLY)
-	) {
+	if (n->namflg & (N_EXPORT | N_RDONLY)) {
 		prs(n->namid);
 		newline();
 	}
@@ -317,7 +317,8 @@ getenv()
 
 static INT namec;
 
-VOID countnam(n)
+VOID
+countnam(n)
 NAMPTR n;
 {
 	namec++;

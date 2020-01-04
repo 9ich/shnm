@@ -10,14 +10,16 @@
 
 /* ========	general purpose string handling ======== */
 
-STRING movstr(a, b)
+STRING
+movstr(a, b)
 register STRING a, b;
 {
 	while (*b++ = *a++);
 	return --b;
 }
 
-INT any(c, s)
+INT
+any(c, s)
 register CHAR c;
 STRING s;
 {
@@ -29,7 +31,8 @@ STRING s;
 	return FALSE;
 }
 
-INT cf(s1, s2)
+INT
+cf(s1, s2)
 register STRING s1, s2;
 {
 	while (*s1++ == *s2)
@@ -38,13 +41,13 @@ register STRING s1, s2;
 	return *--s1 - *s2;
 }
 
-INT length(as)
+INT
+length(as)
 STRING as;
 {
 	register STRING s;
 
-	if (s = as) {
-		while (*s++); ;
-	}
+	if (s = as)
+		while (*s++);
 	return s - as;
 }

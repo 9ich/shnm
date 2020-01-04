@@ -24,7 +24,8 @@ STRING sysmsg[];
 
 /* service routines for `execute' */
 
-VOID initio(iop)
+VOID
+initio(iop)
 IOPTR iop;
 {
 	register STRING ion;
@@ -40,8 +41,7 @@ IOPTR iop;
 				fd = chkopen(tmpout);
 				unlink(tmpout);
 			} else if (iof & IOMOV) {
-				if (eq(minus, ion)
-				) {
+				if (eq(minus, ion)) {
 					fd = -1;
 					close(iof & IOUFD);
 				} else if ((fd = stoi(ion)) >= USERIO)
@@ -63,12 +63,12 @@ IOPTR iop;
 	}
 }
 
-STRING getpath(s)
+STRING
+getpath(s)
 STRING s;
 {
 	register STRING path;
-	if (any('/', s)
-	) {
+	if (any('/', s)) {
 		if (flags & rshflg)
 			failed(s, restricted);
 		else
@@ -79,7 +79,8 @@ STRING s;
 		return cpystak(path);
 }
 
-INT pathopen(path, name)
+INT
+pathopen(path, name)
 register STRING path, name;
 {
 	register UFD f;
@@ -90,7 +91,8 @@ register STRING path, name;
 	return f;
 }
 
-STRING catpath(path, name)
+STRING
+catpath(path, name)
 register STRING path;
 STRING name;
 {
@@ -112,7 +114,8 @@ STRING name;
 static STRING xecmsg;
 static STRING *xecenv;
 
-VOID execa(at)
+VOID
+execa(at)
 STRING at[];
 {
 	register STRING path;
@@ -128,7 +131,8 @@ STRING at[];
 	}
 }
 
-static STRING execs(ap, t)
+static STRING
+execs(ap, t)
 STRING ap;
 register STRING t[];
 {
@@ -176,16 +180,17 @@ register STRING t[];
 static INT pwlist[MAXP];
 static INT pwc;
 
-postclr(){
+postclr()
+{
 	register INT *pw = pwlist;
 
-	while (pw <= &pwlist[pwc]
-	)
+	while (pw <= &pwlist[pwc])
 		*pw++ = 0;
 	pwc = 0;
 }
 
-VOID post(pcsid)
+VOID
+post(pcsid)
 INT pcsid;
 {
 	register INT *pw = pwlist;
@@ -201,7 +206,8 @@ INT pcsid;
 	}
 }
 
-VOID await(i)
+VOID
+await(i)
 INT i;
 {
 	INT rc = 0, wx = 0;
@@ -217,8 +223,7 @@ INT i;
 		{
 			register INT *pw = pwlist;
 			p = wait(&w);
-			while (pw <= &pwlist[ipwc]
-			) {
+			while (pw <= &pwlist[ipwc]) {
 				if (*pw == p) {
 					*pw = 0;
 					pwc--;
@@ -233,13 +238,11 @@ INT i;
 		w_hi = (w >> 8) & LOBYTE;
 
 		if (sig = w & 0177) {
-			if (sig == 0177 /* ptrace! return */
-			) {
+			if (sig == 0177 /* ptrace! return */) {
 				prs("ptrace: ");
 				sig = w_hi;
 			}
-			if (sysmsg[sig]
-			) {
+			if (sysmsg[sig]) {
 				if (i != p || (flags & prompt) == 0) {
 					prp();
 					prn(p);
@@ -280,7 +283,8 @@ STRING at;
 	nosubst = q & QUOTE;
 }
 
-STRING mactrim(s)
+STRING
+mactrim(s)
 STRING s;
 {
 	register STRING t = macro(s);
@@ -288,7 +292,8 @@ STRING s;
 	return t;
 }
 
-STRING *scan(argn)
+STRING*
+scan(argn)
 INT argn;
 {
 	register ARGPTR argp = Rcheat(gchain) & ~ARGMK;
@@ -312,7 +317,8 @@ INT argn;
 	return comargn;
 }
 
-static VOID gsort(from, to)
+static VOID
+gsort(from, to)
 STRING from[], to[];
 {
 	INT k, m, n;
@@ -343,7 +349,8 @@ STRING from[], to[];
 
 /* Argument list generation */
 
-INT getarg(ac)
+INT
+getarg(ac)
 COMPTR ac;
 {
 	register ARGPTR argp;
@@ -360,7 +367,8 @@ COMPTR ac;
 	return count;
 }
 
-static INT split(s)
+static INT
+split(s)
 register STRING s;
 {
 	register STRING argp;
@@ -370,8 +378,7 @@ register STRING s;
 	for (;;) {
 		sigchk();
 		argp = locstak() + BYTESPERWORD;
-		while ((c = *s++, !any(c, ifsnod.namval) && c)
-		)
+		while ((c = *s++, !any(c, ifsnod.namval) && c))
 			*argp++ = c;
 		if (argp == staktop + BYTESPERWORD) {
 			if (c)
@@ -380,8 +387,7 @@ register STRING s;
 				return count;
 		} else if (c == 0)
 			s--;
-		if (c = expand((argp = endstak(argp))->argval, 0)
-		)
+		if (c = expand((argp = endstak(argp))->argval, 0))
 			count += c;
 		else { /* assign(&fngnod, argp->argval); */
 			makearg(argp);

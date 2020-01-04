@@ -13,7 +13,8 @@ BOOL trapflg[MAXTRAP];
 
 /* ========	fault handling routines	======== */
 
-VOID fault(sig)
+VOID
+fault(sig)
 register INT sig;
 {
 	register INT flag;
@@ -32,14 +33,16 @@ register INT sig;
 	}
 }
 
-stdsigs(){
+stdsigs()
+{
 	ignsig(QUIT);
 	getsig(INTR);
 	getsig(MEMF);
 	getsig(ALARM);
 }
 
-ignsig(n){
+ignsig(n)
+{
 	register INT s, i;
 
 	if ((s = signal(i = n, 1) & 01) == 0)
@@ -47,14 +50,16 @@ ignsig(n){
 	return s;
 }
 
-getsig(n){
+getsig(n)
+{
 	register INT i;
 
 	if (trapflg[i = n] & SIGMOD || ignsig(i) == 0)
 		signal(i, fault);
 }
 
-oldsigs(){
+oldsigs()
+{
 	register INT i;
 	register STRING t;
 
@@ -79,7 +84,8 @@ INT i;
 	}
 }
 
-chktrap(){
+chktrap()
+{
 	/* check for traps */
 	register INT i = MAXTRAP;
 	register STRING t;
@@ -88,8 +94,7 @@ chktrap(){
 	while (--i)
 		if (trapflg[i] & TRAPSET) {
 			trapflg[i] &= ~TRAPSET;
-			if (t = trapcom[i]
-			) {
+			if (t = trapcom[i]) {
 				INT savxit = exitval;
 				execexp(t, 0);
 				exitval = savxit;
